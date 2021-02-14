@@ -1,4 +1,4 @@
-{   
+{
     "manifest": {
         "langName": "Italiano",
         "langLogo": "none"
@@ -19,10 +19,10 @@
                 "Bob-omba rosa (Premi [B]).",
                 "Di sicuro ti aiuterà,",
                 "e così faranno i suoi",
-		"compagni in altre",
+                "compagni in altre",
                 "aree.",
                 "Per leggere i cartelli,",
-		"fermati davanti a loro",
+                "fermati davanti a loro",
                 "e premi [B]. Premi [A]",
                 "o [B] per continuare",
                 "a leggere.",
@@ -892,15 +892,16 @@
             "lines": [
                 "Impara tre importanti",
                 "tecniche di salto.",
+                "",
                 "Prima prova il Salto",
                 "Triplo.",
-                "",
                 "Corri veloce e salta",
                 "tre volte:",
                 "una, due e tre.",
                 "Se ritmi bene i salti,",
                 "il terzo salto ti farà",
                 "balzare molto in alto.",
+                "",
                 "Ora pensiamo",
                 "alla distanza",
                 "con il Salto in Lungo.",
@@ -1122,14 +1123,12 @@
             "leftOffset": 30,
             "width": 200,
             "lines": [
-                "Hai trovato la mia,",
-                "bimba preziosa! Dove",
-                "eri stata? Come potrei",
-                "mai ringraziarti,",
-                "Mario?",
-                "Oh, ho qui questa...",
-                "...Stella. Tieni,",
-                "prendila, insieme",
+                "Hai trovato la mia bimba",
+                "preziosa! Dove eri stata?",
+                "Come potrei mai ",
+                "ringraziarti, Mario?",
+                "Oh, ho qui questa stella.",
+                "Tieni, prendila, insieme",
                 "alla mia gratitudine."
             ]
         },
@@ -1346,11 +1345,11 @@
                 "Se toccherai del fuoco o",
                 "cadrai in una pozza di",
                 "lava, impazzirai dal",
-                "dolore; ma non",
-                "perdere la pazienza.",
-                "Puoi comunque",
-                "controllare Mario..",
-                "ti basta stare calmo!"
+                "dolore. Ma non perdere",
+                "la pazienza. Puoi",
+                "comunque controllare",
+                "Mario... ti basta stare",
+                "calmo!"
             ]
         },
         {
@@ -1378,7 +1377,7 @@
                 "direttamente dai mondi",
                 "dei dipinti in cui",
                 "vivono i nemici.",
-                "Basta fermarsi, premere,",
+                "Basta fermarsi, premere",
                 "Start per mettere in pausa",
                 "il gioco, e selezionare",
                 "『Esci dal percorso』.",
@@ -1628,8 +1627,7 @@
             "lines": [
                 "Tieniti stretto il",
                 "cappello! Se lo perdi,",
-                "non verrai preso",
-                "sul serio.",
+                "sarai ferito facilmente.",
                 "",
                 "Se perderai il tuo",
                 "Cappello, dovrai cercarlo",
@@ -1711,8 +1709,8 @@
             "width": 200,
             "lines": [
                 "Girare intorno ad alcuni",
-                "nemici gli fa girare la",
-                "testa e...gli occhi."
+                "nemici fa girare loro la",
+                "testa e... gli occhi."
             ]
         },
         {
@@ -1773,9 +1771,8 @@
                 "Sei finito proprio",
                 "nella mia trappola!",
                 "Come prevedevo!",
-                "Ti avverto,",
-                "『Amico,』 sta'",
-                "attento!"
+                "Ti avverto, 『Amico』,",
+                " sta' attento!"
             ]
         },
         {
@@ -2253,15 +2250,14 @@
             "lines": [
                 "Grrr! Sono stato",
                 "imprudente. Non è andata",
-                "come speravo...ma ho ancora",
-                "il potere delle Stelle!",
-                "E ho ancora Peach.",
+                "come speravo... ma ho",
+                "ancora il potere delle",
+                "Stelle! E ho ancora Peach.",
                 "Bwa ha ha! Non ti darò",
                 "nessun'altra stella!",
                 "Non ho ancora finito",
-                "con te,",
-                "ma ti lascerò andare",
-                "per ora",
+                "con te, ma ti lascerò",
+                "andare per ora.",
                 "Pagherai dopo le",
                 "conseguenze!"
             ]
@@ -2282,8 +2278,7 @@
                 "",
                 "Ora, se vuoi vedere la tua",
                 "preziosa principessa,",
-                "vieni in cima",
-                "alla torre.",
+                "vieni in cima alla torre.",
                 "Ti aspetto!",
                 "Gwa ha ha ha!"
             ]
@@ -2426,7 +2421,7 @@
                 "l'interruttore del",
                 "Cappello Invisibile.",
                 "Indossando il Cappello",
-                "scomparirai, quidni potrai",
+                "scomparirai, quindi potrai",
                 "ingannare i tuoi nemici",
                 "e passare attraverso",
                 "molte cose. Prova!"
@@ -2466,13 +2461,10 @@
                 "tutti i blocchi rossi",
                 "che troverai",
                 "diventeranno solidi.",
-                "",
                 "Adesso tocca a te!",
                 "Esegui un salto",
                 "triplo per decollare",
                 "e premi Z per atterrare.",
-                "",
-                "",
                 "Trascina indietro",
                 "il C-stick per andare in",
                 "alta quota e inclinalo",
@@ -2607,17 +2599,16 @@
                 "",
                 "Fa' attenzione, però.",
                 "Bowser e la sue truppe",
-                "sono esperti del",
-                "『male.』",
+                "sono esperti del 『male.』",
                 "Ascoltami: quando ti fai",
                 "male, colleziona monete.",
                 "Le monete gialle fanno",
                 "recuperare una tacca",
-                "dell'energia,",
-                "mentre quelle rosse due",
-                "tacche, e quelle blu",
+                "d'energia, quelle rosse",
+                "due tacche e quelle blu",
                 "cinque.",
                 "",
+				"",
                 "Per far apparire le monete",
                 "blu, fa' uno schianto su",
                 "quegli strani blocchi blu.",
@@ -2625,9 +2616,10 @@
                 "",
                 "",
                 "Quando cadi dall'alto,",
-                "puoi ammortizzare la caduta",
-                "se esegui uno schianto",
-                "nel momento in cui atterri."
+                "puoi ammortizzare la",
+                "caduta se esegui uno",
+                "schianto nel momento in cui",
+				"atterri."
             ]
         },
         {
@@ -2973,15 +2965,14 @@
             "lines": [
                 "Tieniti stretto il",
                 "cappello! Se lo perdi,",
-                "cercalo nel livello",
-                "in cui lo hai smarrito,",
-                "se non vuoi subire più",
-                "danni. A proposito, la",
+                "cercalo nel livello in cui",
+                "l'hai smarrito, se non",
+                "vuoi subire più danni.",
+                "A proposito, la",
                 "Principessa è ancora",
                 "dispersa dentro i",
                 "muri del castello.",
                 "Ti prego, aiutala!",
-                "",
                 "Oh, sai che ci sono",
                 "mondi segreti anche",
                 "nei muri oltre che nei",
@@ -3078,8 +3069,7 @@
                 "per abbassarti e salti,",
                 "puoi fare una capriola",
                 "all'indietro. Per un salto",
-                "in lungo, corri,",
-                "premi [Z],",
+                "in lungo, corri, premi [Z]",
                 "e salta."
             ]
         },
@@ -3115,14 +3105,15 @@
                 "sconfitto Bowser? E hai",
                 "recuperato le stelle per",
                 "rianimare il castello?",
-                "E hai salvato la principessa?",
+                "Hai salvato la principessa?",
                 "Sapevo che ce l'avresti",
                 "fatta! Ho un messaggio",
                 "molto speciale per te.",
                 "『Grazie per aver giocato a",
                 "Super Mario 64! Questa è la",
                 "fine del gioco, ma non",
-                "del divertimento. Vogliamo che continui",
+                "del divertimento.",
+                "Vogliamo che continui",
                 "a giocare, quindi abbiamo",
                 "preparato qualcosa per te.",
                 "Speriamo che ti piaccia!",
