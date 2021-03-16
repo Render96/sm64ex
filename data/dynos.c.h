@@ -106,6 +106,7 @@ bool        dynos_music_load_from_r96_folder           (const char *name, s32 lo
 bool        dynos_music_load_presets                   (const char *filename, const char *folder);
 bool        dynos_music_load_presets_from_dynos_folder (const char *filename, const char *folder);
 void        dynos_music_play                           (const char *name);
+void        dynos_music_multi_play                     (const char *name);
 void        dynos_music_stop                           ();
 void        dynos_music_pause                          ();
 void        dynos_music_resume                         ();

@@ -1008,7 +1008,6 @@ void handle_special_dialog_text(s16 dialogID) { // dialog ID tables, in order
 
     for (i = 0; i < (s16) ARRAY_COUNT(dialogBossStop); i++) {
         if (dialogBossStop[i] == dialogID) {
-            r96_music_fade_out();
             //sequence_player_fade_out(0, 1);
             return;
         }
@@ -1822,7 +1821,6 @@ void print_hud_course_complete_coins(s16 x, s16 y) {
 void play_star_fanfare_and_flash_hud(s32 arg, u8 starNum) {
     if (gHudDisplay.coins == gCourseCompleteCoins && (gCurrCourseStarFlags & starNum) == 0 && gHudFlash == 0) {
         r96_play_jingle(R96_EVENT_STAR_FANFARE);
-        softenJingleVolume = 1.0f;
         gHudFlash = arg;
     }
 }
@@ -1990,7 +1988,7 @@ s16 render_menus_and_dialogs() {
                 mode = render_course_complete_screen();
                 break;
         }
-        r96_music_jingle_pause();
+        r96_lower_music();
         gDialogColorFadeTimer = (s16) gDialogColorFadeTimer + 0x1000;
     } else if (gDialogID != -1) {
         // The Peach "Dear Mario" message needs to be repositioned separately

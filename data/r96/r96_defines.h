@@ -15,16 +15,22 @@
 #define R96_LEVEL_WF                              "level_wf" //SEQ_LEVEL_GRASS
 #define R96_LEVEL_CCM                             "level_ccm" //SEQ_LEVEL_SNOW
 #define R96_LEVEL_CCM_SLIDE                       "level_ccm_slide" //SEQ_LEVEL_SLIDE
-#define R96_LEVEL_JRB                             "level_jrb" //SEQ_LEVEL_WATER
+#define R96_LEVEL_JRB_PHASE_1                     "level_jrb_phase_1" //SEQ_LEVEL_WATER
+#define R96_LEVEL_JRB_PHASE_2                     "level_jrb_phase_2" //SEQ_LEVEL_WATER
+#define R96_LEVEL_JRB_PHASE_3                     "level_jrb_phase_3" //SEQ_LEVEL_WATER
 #define R96_LEVEL_JRB_SHIP                        "level_jrb_ship" //SEQ_LEVEL_WATER
-#define R96_LEVEL_BBH                             "level_bbh" //SEQ_LEVEL_SPOOKY
-#define R96_LEVEL_HMC                             "level_hmc" //SEQ_LEVEL_UNDERGROUND
+#define R96_LEVEL_BBH_PHASE_1                     "level_bbh_phase_1" //SEQ_LEVEL_SPOOKY
+#define R96_LEVEL_BBH_PHASE_2                     "level_bbh_phase_2" //SEQ_LEVEL_SPOOKY
+#define R96_LEVEL_HMC_PHASE_1                     "level_hmc_phase_1" //SEQ_LEVEL_UNDERGROUND
+#define R96_LEVEL_HMC_PHASE_2                     "level_hmc_phase_2" //SEQ_LEVEL_UNDERGROUND
 #define R96_LEVEL_LLL_OUTSIDE                     "level_lll_outside" //SEQ_LEVEL_HOT
 #define R96_LEVEL_LLL_VOLCANO                     "level_lll_volcano" //SEQ_LEVEL_HOT
 #define R96_LEVEL_SSL_OUTSIDE                     "level_ssl_outside" //SEQ_LEVEL_HOT
 #define R96_LEVEL_SSL_PYRAMID                     "level_ssl_pyramid" //SEQ_LEVEL_UNDERGROUND
 #define R96_LEVEL_SSL_EYEROK                      "level_ssl_eyerok" //SEQ_LEVEL_UNDERGROUND
-#define R96_LEVEL_DDD                             "level_ddd" //SEQ_LEVEL_WATER
+#define R96_LEVEL_DDD_PHASE_1                     "level_ddd_phase_1" //SEQ_LEVEL_WATER
+#define R96_LEVEL_DDD_PHASE_2                     "level_ddd_phase_2" //SEQ_LEVEL_WATER
+#define R96_LEVEL_DDD_PHASE_3                     "level_ddd_phase_3" //SEQ_LEVEL_WATER
 #define R96_LEVEL_SL_OUTSIDE                      "level_sl_outside" //SEQ_LEVEL_SNOW
 #define R96_LEVEL_SL_IGLOO                        "level_sl_igloo" //SEQ_LEVEL_UNDERGROUND
 #define R96_LEVEL_WDW_MAIN                        "level_wdw_main" //SEQ_LEVEL_UNDERGROUND
@@ -48,7 +54,11 @@
 #define R96_LEVEL_BOWSER_1                        "level_bowser_1" //SEQ_LEVEL_BOSS_KOOPA
 #define R96_LEVEL_BOWSER_2                        "level_bowser_2" //SEQ_LEVEL_BOSS_KOOPA
 #define R96_LEVEL_BOWSER_3                        "level_bowser_3" //SEQ_LEVEL_BOSS_KOOPA_FINAL
-#define R96_LEVEL_INSIDE_CASTLE                   "level_inside_castle" //SEQ_LEVEL_INSIDE_CASTLE
+#define R96_LEVEL_INSIDE_CASTLE_LOBBY             "level_inside_castle_lobby" //SEQ_LEVEL_INSIDE_CASTLE
+#define R96_LEVEL_INSIDE_CASTLE_TIPPY             "level_inside_castle_tippy" //SEQ_LEVEL_INSIDE_CASTLE
+#define R96_LEVEL_INSIDE_CASTLE_BASEMENT          "level_inside_castle_basement" //SEQ_LEVEL_INSIDE_CASTLE
+#define R96_LEVEL_CASTLE_GROUNDS                  "level_castle_grounds"
+#define R96_LEVEL_CASTLE_COURTYARD                "level_castle_courtyard"
 #define R96_LEVEL_FOURTH_FLOOR                    "level_fourth_floor"
 
 /* Jingle */
@@ -60,10 +70,12 @@
 #define R96_EVENT_CAP_METAL                       "event_cap_metal" //SEQ_EVENT_METAL_CAP
 #define R96_EVENT_RACE                            "event_race"
 #define R96_EVENT_PIRANHA_PLANT                   "event_piranha_plant" //SEQ_EVENT_PIRANHA_PLANT
-#define R96_EVENT_POWERUP                         "event_powerup" //SEQ_EVENT_POWERUP
 #define R96_MENU_FILE_SELECT                      "menu_file_select" //SEQ_MENU_FILE_SELECT
 #define R96_EVENT_GOT_MILK                        "event_got_milk"
 #define R96_EVENT_TITLE_SCREEN                    "event_title_screen"
+#define R96_EVENT_CAP_VANISH                      "event_cap_vanish" //SEQ_EVENT_POWERUP
+#define R96_EVENT_CAP_WING                        "event_cap_wing" //SEQ_EVENT_POWERUP
+#define R96_EVENT_SHELL                           "event_shell" //SEQ_EVENT_POWERUP
 
 //no loops
 #define R96_EVENT_GAME_OVER                       "event_game_over"

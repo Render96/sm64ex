@@ -100,7 +100,6 @@ static void camera_lakitu_intro_act_show_dialog(void) {
                 if (o->oDistanceToMario < 1000.0f) {
                     if (!o->oCameraLakituUnk104) {
                         r96_play_jingle(R96_EVENT_LAKITU_MESSAGE);
-                        softenJingleVolume = 1.0f;
                         o->oCameraLakituUnk104 = TRUE;
                     }
 

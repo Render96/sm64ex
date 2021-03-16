@@ -348,8 +348,8 @@ static void *DynOS_Warp_UpdateWarp(void *aCmd, bool aIsLevelInitDone) {
             DynOS_Music_Stop();
             set_background_music(gCurrentArea->musicParam, gCurrentArea->musicParam2, 0);
             if (gMarioState->flags & MARIO_METAL_CAP)  r96_play_cap_music(R96_EVENT_CAP_METAL);
-            if (gMarioState->flags & MARIO_VANISH_CAP) r96_play_cap_music(R96_EVENT_POWERUP);
-            if (gMarioState->flags & MARIO_WING_CAP)   r96_play_cap_music(R96_EVENT_POWERUP);
+            if (gMarioState->flags & MARIO_VANISH_CAP) r96_play_cap_music(R96_EVENT_CAP_VANISH);
+            if (gMarioState->flags & MARIO_WING_CAP)   r96_play_cap_music(R96_EVENT_CAP_WING);
             if (gCurrLevelNum == LEVEL_BOWSER_1 ||
                 gCurrLevelNum == LEVEL_BOWSER_2 ||
                 gCurrLevelNum == LEVEL_BOWSER_3) {

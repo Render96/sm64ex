@@ -287,6 +287,10 @@ void dynos_music_play(const char *name) {
     return DynOS_Music_Play(name);
 }
 
+void dynos_music_multi_play(const char *name) {
+    return DynOS_Music_Multi_Play(name);
+}
+
 void dynos_music_stop() {
     return DynOS_Music_Stop();
 }

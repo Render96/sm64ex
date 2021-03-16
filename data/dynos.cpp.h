@@ -707,6 +707,7 @@ bool               DynOS_Music_LoadRaw                   (const String &aName, c
 bool               DynOS_Music_LoadWav                   (const String &aName, const SysPath &aFilename, s32 aLoop, f32 aVolume);
 bool               DynOS_Music_LoadPresets               (const SysPath &aFilename, const SysPath &aFolder);
 void               DynOS_Music_Play                      (const String &aName);
+void               DynOS_Music_Multi_Play                (const String &aName);
 void               DynOS_Music_Stop                      ();
 void               DynOS_Music_Pause                     ();
 void               DynOS_Music_Resume                    ();

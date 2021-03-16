@@ -108,6 +108,7 @@ static void toad_message_faded(void) {
     if (gCurrentObject->oToadMessageRecentlyTalked == 0 && gCurrentObject->oDistanceToMario < 600.0f) {
         gCurrentObject->oToadMessageState = TOAD_MESSAGE_OPACIFYING;
     }
+    r96_stop_jingle();
 }
 
 static void toad_message_opaque(void) {

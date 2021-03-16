@@ -7051,7 +7051,6 @@ static UNUSED void unused_cutscene_mario_dialog_looking_up(UNUSED struct Camera 
  */
 BAD_RETURN(s32) cutscene_intro_peach_start_letter_music(UNUSED struct Camera *c) {
     r96_play_jingle(R96_EVENT_PEACH_MESSAGE);
-    softenJingleVolume = 1.0f;
 }
 
 /**
@@ -7059,7 +7058,6 @@ BAD_RETURN(s32) cutscene_intro_peach_start_letter_music(UNUSED struct Camera *c)
  */
 BAD_RETURN(s32) cutscene_intro_peach_start_flying_music(UNUSED struct Camera *c) {
     r96_play_jingle(R96_EVENT_INTRO);
-    softenJingleVolume = 1.0f;
 }
 
 

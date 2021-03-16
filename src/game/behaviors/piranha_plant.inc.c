@@ -95,8 +95,12 @@ void piranha_plant_act_sleeping(void) {
         if (mario_moving_fast_enough_to_make_piranha_plant_bite()) {
             o->oAction = PIRANHA_PLANT_ACT_WOKEN_UP;
         }
+        softenJingleVolume = 1.0f;
+    } else if (o->oDistanceToMario < 650.0f) {
+        softenJingleVolume = 1.0f;
     } else if (o->oDistanceToMario < 1000.0f) {
         r96_play_jingle(R96_EVENT_PIRANHA_PLANT);
+        softenJingleVolume = 0.4f;
         o->oPiranhaPlantSleepMusicState = PIRANHA_PLANT_SLEEP_MUSIC_PLAYING;
     } else if (o->oPiranhaPlantSleepMusicState == PIRANHA_PLANT_SLEEP_MUSIC_PLAYING) {
         o->oPiranhaPlantSleepMusicState++;

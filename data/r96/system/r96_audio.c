@@ -1,8 +1,8 @@
 #include "data/r96/r96_c_includes.h"
 #include "data/r96/system/r96_system.h"
 
-float softenVolume = 1;
-float softenJingleVolume = 1;
+float softenVolume = 1.0f;
+float softenJingleVolume = 1.0f;
 
 u32 onShell = 0;
 
@@ -135,25 +135,25 @@ void r96_play_character_flying_sound(struct MarioState *m) {
 void r96_play_shell_music() {
     onShell = 1;
     dynos_music_stop();
-    dynos_music_play(R96_EVENT_POWERUP);
-    softenVolume = 1.0f;
+    dynos_music_play(R96_EVENT_SHELL);
 }
 
 void r96_stop_shell_music() {
     onShell = 0;
-    if (dynos_music_is_playing(R96_EVENT_POWERUP))
+    if (dynos_music_is_playing(R96_EVENT_SHELL))
         dynos_music_stop();
 }
 
 // Cap Functions
 
 void r96_play_cap_music(const char* R96_CAP_MUSIC) {
-    if (R96_CAP_MUSIC != NO_MUSIC) {
-        dynos_music_stop();
-        dynos_music_play(R96_CAP_MUSIC);
-        softenVolume = 1.0f;
+    if (!Cheats.JBC) {
+        if (R96_CAP_MUSIC != NO_MUSIC) {
+            dynos_music_stop();
+            dynos_music_play(R96_CAP_MUSIC);
+        }
+        sR96CurrentCapMusic = R96_CAP_MUSIC;
     }
-    sR96CurrentCapMusic = R96_CAP_MUSIC;
 }
 
 void r96_fadeout_cap_music() {
@@ -168,7 +168,6 @@ void r96_stop_cap_music() {
     && !dynos_music_is_playing(R96_EVENT_BOSS_THEME)
     ) {
         dynos_music_stop();
-        softenVolume = 1.0f;
     }
     sR96CurrentCapMusic = NO_MUSIC;
 }
@@ -176,8 +175,8 @@ void r96_stop_cap_music() {
 void r96_cap_music_boss_fix() {
     // Scenario where boss music is done but mario has power up
     if (gMarioState->flags & MARIO_METAL_CAP) r96_play_cap_music(R96_EVENT_CAP_METAL);
-    if (gMarioState->flags & MARIO_VANISH_CAP) r96_play_cap_music(R96_EVENT_POWERUP);
-    if (gMarioState->flags & MARIO_WING_CAP) r96_play_cap_music(R96_EVENT_POWERUP);
+    if (gMarioState->flags & MARIO_VANISH_CAP) r96_play_cap_music(R96_EVENT_CAP_VANISH);
+    if (gMarioState->flags & MARIO_WING_CAP) r96_play_cap_music(R96_EVENT_CAP_WING);
 }
 
 // Jingle Functions
@@ -192,8 +191,8 @@ void r96_play_menu_jingle(const char* R96_JINGLE) {
 }
 
 void r96_play_jingle(const char* R96_JINGLE) {
-    if (!dynos_jingle_is_playing(R96_JINGLE)) {
-        softenJingleVolume = 0.20f;
+    if (!dynos_jingle_is_playing(R96_JINGLE) && !dynos_jingle_is_playing(R96_EVENT_STAR_COLLECT)) {
+        softenJingleVolume = 1.0f;
         dynos_jingle_stop();
         dynos_jingle_play(R96_JINGLE);
     }
@@ -212,13 +211,20 @@ void r96_stop_jingle() {
 }
 
 void r96_jingle_fade_in() {
-    if (softenJingleVolume != 1.0f) {
-        softenJingleVolume += 0.10f;
+    if (!dynos_jingle_is_playing(R96_EVENT_PIRANHA_PLANT)) {
+        if (softenJingleVolume < 1.0f) {
+            softenJingleVolume += 0.10f;
+        }
+        if (softenJingleVolume >= 1.0f) {
+            softenJingleVolume = 1.0f;
+        }
     }
 }
+
 void r96_jingle_fade_out() {
-    if (softenJingleVolume != 0.20f) {
-        softenJingleVolume -= 0.10f;
+    softenJingleVolume -= 0.10f;
+    if (softenJingleVolume <= 0.20f) {
+        softenJingleVolume = 0.20f;
     }
 }
 
@@ -226,9 +232,14 @@ void r96_jingle_fade_out() {
 
 void r96_play_music(const char* R96_MUSIC) {
     if (!dynos_music_is_playing(R96_MUSIC)) {
-        softenVolume = 0.2f;
         dynos_music_stop();
         dynos_music_play(R96_MUSIC);
+    }
+}
+
+void r96_play_multi_music(const char* R96_MUSIC) {
+    if (!dynos_music_is_playing(R96_MUSIC)) {
+        dynos_music_multi_play(R96_MUSIC);
     }
 }
 
@@ -240,16 +251,20 @@ void r96_music_fade_in() {
     if (softenVolume < 1.0f) {
         softenVolume += 0.10f;
     }
+    if (softenVolume >= 1.0f) {
+        softenVolume = 1.0f;
+    }
 }
 
 void r96_music_fade_out() {
-    if (softenVolume > 0.20f) {
-        softenVolume -= 0.10f;
+    softenVolume -= 0.10f;
+    if (softenVolume <= 0.20f) {
+        softenVolume = 0.20f;
     }
 }
 
 // When the fanfare is playing and the pause window opens
-void r96_music_jingle_pause() {
+void r96_lower_music() {
     if (dynos_jingle_is_playing(R96_EVENT_STAR_FANFARE))
         softenJingleVolume = 1.0f;
     else
@@ -261,35 +276,42 @@ void r96_music_jingle_pause() {
 void r96_level_music_update() {
     const char *music = r96_get_intended_level_music();
 
-    if (dynos_jingle_is_playing(R96_MENU_FILE_SELECT)){
+    if (dynos_jingle_is_playing(R96_MENU_FILE_SELECT) || dynos_jingle_is_playing(R96_EVENT_STAR_SELECT)){
         r96_jingle_fade_out();
         if (softenJingleVolume == 0.20f)
             dynos_jingle_stop();
     }
 
-    if (!dynos_jingle_is_playing(R96_EVENT_CREDITS) && !dynos_jingle_is_playing(R96_EVENT_TITLE_SCREEN) && !dynos_jingle_is_playing(R96_EVENT_GAME_OVER)) {
+    if (!dynos_jingle_is_playing(R96_EVENT_CREDITS) 
+    && !dynos_jingle_is_playing(R96_EVENT_TITLE_SCREEN) 
+    && !dynos_jingle_is_playing(R96_EVENT_GAME_OVER)
+    && !dynos_jingle_is_playing(R96_EVENT_PEACH_ENDING)
+    && !dynos_jingle_is_playing(R96_EVENT_PEACH_MESSAGE)
+    && !dynos_jingle_is_playing(R96_EVENT_INTRO)) {
         r96_play_infinite_stairs_music();
-        // Stops wing cap from playing inside the castle
-        if (gCurrLevelNum == LEVEL_CASTLE && dynos_music_is_playing(R96_EVENT_POWERUP))
-            r96_stop_music();
         // Keeps event music if meant to be playing
-        if (gCurrLevelNum != LEVEL_CASTLE_GROUNDS) {
-            if (music == NO_MUSIC)
-                r96_stop_music();
-            else if (!dynos_music_is_playing(music)
-            && !dynos_music_is_playing(R96_EVENT_BOSS_INTRO)
-            && !dynos_music_is_playing(R96_EVENT_BOSS_THEME)
-            && !dynos_music_is_playing(R96_EVENT_CAP_METAL)
-            && !dynos_music_is_playing(R96_EVENT_RACE)
-            && !dynos_music_is_playing(R96_EVENT_POWERUP)
-            && !dynos_music_is_playing(R96_EVENT_GOT_MILK)
-            && !dynos_jingle_is_playing(R96_EVENT_VICTORY)
-            ) {
-                r96_play_music(music);
-            }
-        }
-        else if (gCurrLevelNum == LEVEL_CASTLE_GROUNDS && dynos_music_is_playing(R96_LEVEL_INSIDE_CASTLE)) {
+        if (music == NO_MUSIC)
             r96_stop_music();
+        else if (!dynos_music_is_playing(music)
+        && !dynos_music_is_playing(R96_EVENT_BOSS_INTRO)
+        && !dynos_music_is_playing(R96_EVENT_BOSS_THEME)
+        && !dynos_music_is_playing(R96_EVENT_CAP_METAL)
+        && !dynos_music_is_playing(R96_EVENT_RACE)
+        && !dynos_music_is_playing(R96_EVENT_GOT_MILK)
+        && !dynos_jingle_is_playing(R96_EVENT_VICTORY)
+        && !dynos_music_is_playing(R96_EVENT_CAP_VANISH)
+        && !dynos_music_is_playing(R96_EVENT_CAP_WING)
+        && !dynos_music_is_playing(R96_EVENT_SHELL)
+        ) {
+            if (gCurrLevelNum == LEVEL_JRB 
+            || gCurrLevelNum == LEVEL_DDD 
+            || gCurrLevelNum == LEVEL_WDW 
+            || gCurrLevelNum == LEVEL_HMC
+            || gCurrLevelNum == LEVEL_BBH
+            || gCurrLevelNum == LEVEL_CASTLE)
+                r96_play_multi_music(music);
+            else
+                r96_play_music(music);
         }
 
         // Special Jingle cases
@@ -331,10 +353,10 @@ const char *r96_get_intended_level_music() {
                 return R96_LEVEL_BOB;
                 break;
             case 1:
-                return R96_LEVEL_INSIDE_CASTLE;
+                return R96_LEVEL_INSIDE_CASTLE_LOBBY;
                 break;
             case 2:
-                return R96_LEVEL_JRB;
+                return R96_LEVEL_JRB_PHASE_3;
                 break;
             case 3:
                 return R96_LEVEL_LLL_OUTSIDE;
@@ -349,10 +371,10 @@ const char *r96_get_intended_level_music() {
                 return R96_LEVEL_PSS;
                 break;
             case 7:
-                return R96_LEVEL_BBH;
+                return R96_LEVEL_BBH_PHASE_1;
                 break;
             case 8:
-                return R96_LEVEL_HMC;
+                return R96_LEVEL_HMC_PHASE_1;
                 break;
             case 9:
                 return R96_LEVEL_BITDW;
@@ -363,9 +385,32 @@ const char *r96_get_intended_level_music() {
         }
     }
 
+// Castle Courtyard
+    if (gCurrLevelNum == LEVEL_CASTLE_GROUNDS) {
+        if (gCurrLevelArea == AREA_CASTLE_GROUNDS)
+            if (dynos_jingle_is_playing(R96_EVENT_INTRO))
+                r96_stop_music();
+            return R96_LEVEL_CASTLE_GROUNDS;
+    }
+
 // Inside Castle
-    if (gCurrLevelNum == LEVEL_CASTLE)
-        return R96_LEVEL_INSIDE_CASTLE;
+    if (gCurrLevelNum == LEVEL_CASTLE) {
+        // Stops wing cap from playing inside the castle
+        if (dynos_music_is_playing(R96_EVENT_CAP_WING) 
+        || dynos_music_is_playing(R96_LEVEL_CASTLE_GROUNDS) 
+        || dynos_music_is_playing(R96_LEVEL_CASTLE_COURTYARD))
+            r96_stop_music();
+        if (gCurrLevelArea == AREA_CASTLE_LOBBY)
+            return R96_LEVEL_INSIDE_CASTLE_LOBBY;
+        if (gCurrLevelArea == AREA_CASTLE_TIPPY)
+            return R96_LEVEL_INSIDE_CASTLE_TIPPY;
+        if (gCurrLevelArea == AREA_CASTLE_BASEMENT)
+            return R96_LEVEL_INSIDE_CASTLE_BASEMENT;
+    }
+
+// Castle Courtyard
+    if (gCurrLevelNum == LEVEL_CASTLE_COURTYARD)
+        return R96_LEVEL_CASTLE_COURTYARD;
 
 // Fourth Floor
     if (gCurrLevelNum == LEVEL_FOURTH_FLOOR) {
@@ -391,19 +436,33 @@ const char *r96_get_intended_level_music() {
 
 // Jolly Roger Bay
     if (gCurrLevelNum == LEVEL_JRB) {
+        if ((((s16) gMarioStates[0].pos[1]) > -3100) && (((s16) gMarioStates[0].pos[2]) <= -900))
+            return R96_LEVEL_JRB_PHASE_3;
         if (gCurrLevelArea == AREA_JRB_MAIN)
-            return R96_LEVEL_JRB;
+            if ((((s16) gMarioStates[0].pos[1]) > 945) && (((s16) gMarioStates[0].pos[0]) <= -5260))
+                return R96_LEVEL_JRB_PHASE_1;
+            if ((((s16) gMarioStates[0].pos[1]) > 1000))
+                return R96_LEVEL_JRB_PHASE_1;
         if (gCurrLevelArea == AREA_JRB_SHIP)
             return R96_LEVEL_JRB_SHIP;
+        return R96_LEVEL_JRB_PHASE_2;
     }
 
 // Big Boo's Haunt
-    if (gCurrLevelNum == LEVEL_BBH)
-        return R96_LEVEL_BBH;
+    if (gCurrLevelNum == LEVEL_BBH) {
+        if (gMarioCurrentRoom == BBH_OUTSIDE_ROOM || gMarioCurrentRoom == BBH_NEAR_MERRY_GO_ROUND_ROOM) 
+            return R96_LEVEL_BBH_PHASE_2;
+        return R96_LEVEL_BBH_PHASE_1;
+    }
 
 // Hazy Maze Cave
-    if (gCurrLevelNum == LEVEL_HMC)
-        return R96_LEVEL_HMC;
+    if (gCurrLevelNum == LEVEL_HMC) {
+        if ((((s16) gMarioStates[0].pos[0]) <= 0) && (((s16) gMarioStates[0].pos[1]) <= -203))
+            return R96_LEVEL_HMC_PHASE_2;
+        if ((((s16) gMarioStates[0].pos[0]) > 0) && (((s16) gMarioStates[0].pos[1]) <= -2400))
+            return R96_LEVEL_HMC_PHASE_2;
+        return R96_LEVEL_HMC_PHASE_1;
+    }
 
 // Lethal Lava Land
     if (gCurrLevelNum == LEVEL_LLL) {
@@ -417,15 +476,26 @@ const char *r96_get_intended_level_music() {
     if (gCurrLevelNum == LEVEL_SSL) {
         if (gCurrLevelArea == AREA_SSL_OUTSIDE)
             return R96_LEVEL_SSL_OUTSIDE;
-        if (gCurrLevelArea == AREA_SSL_PYRAMID)
+        if (gCurrLevelArea == AREA_SSL_PYRAMID) {
+            if (!dynos_music_is_playing(R96_LEVEL_SSL_PYRAMID)) {
+                r96_stop_cap_music();
+            }
             return R96_LEVEL_SSL_PYRAMID;
+        }
         if (gCurrLevelArea == AREA_SSL_EYEROK)
             return R96_LEVEL_SSL_EYEROK;
     }
 
 // Dire Dire Docks
-    if (gCurrLevelNum == LEVEL_DDD)
-        return R96_LEVEL_DDD;
+    if (gCurrLevelNum == LEVEL_DDD) {
+        if (gCurrLevelArea == AREA_DDD_WHIRLPOOL)
+            if ((((s16) gMarioStates[0].pos[0]) <= -800) || ((((s16) gMarioStates[0].pos[0]) <= 470) && (((s16) gMarioStates[0].pos[1]) > -2000)))
+                return R96_LEVEL_DDD_PHASE_1;
+        if (gCurrLevelArea == AREA_DDD_SUB)
+            if ((((s16) gMarioStates[0].pos[1]) > 100))
+                return R96_LEVEL_DDD_PHASE_3;
+        return R96_LEVEL_DDD_PHASE_2;
+    }
 
 // Snowman Land
     if (gCurrLevelNum == LEVEL_SL) {
@@ -438,12 +508,13 @@ const char *r96_get_intended_level_music() {
 // Wet Dry World 
     if (gCurrLevelNum == LEVEL_WDW) {
         if (gCurrLevelArea == AREA_WDW_MAIN)
-            return R96_LEVEL_WDW_MAIN;
+                return R96_LEVEL_WDW_MAIN;
         if (gCurrLevelArea == AREA_WDW_TOWN) {
             if (dynos_music_is_playing(R96_EVENT_GOT_MILK))
                 r96_stop_music();
             return R96_LEVEL_WDW_TOWN;
         }
+    return R96_LEVEL_WDW_MAIN;
     }
 
 // Tall Tall Mountain

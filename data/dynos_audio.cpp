@@ -59,7 +59,12 @@ struct MusicData {
     s32 mLoop;
     s32 mCurrent;
     f32 mVolume;
+    f32 mVolMulti;
+    s32 mFadeTime;
+    s32 mFadeIn;
 };
+
+s32 mCurrentMultiTrack = 0;
 
 STATIC_STORAGE(Array<MusicData *>, LoadedMusics);
 #define sLoadedMusics __LoadedMusics()
@@ -67,13 +72,15 @@ STATIC_STORAGE(Array<MusicData *>, LoadedMusics);
 STATIC_STORAGE(MusicData *, PlayingMusic);
 #define sPlayingMusic __PlayingMusic()
 
+void DynOS_Music_FadeIn();
+
 static void DynOS_Music_Callback(UNUSED void *, u8 *aStream, s32 aLength) {
     bzero(aStream, aLength);
     if (sPlayingMusic == NULL) {
         return;
     }
 
-    f32 _Volume = sPlayingMusic->mVolume * (configMasterVolume / 127.f) * (configMusicVolume / 127.f) * softenVolume;
+    f32 _Volume = sPlayingMusic->mVolume * (configMasterVolume / 127.f) * (configMusicVolume / 127.f) * softenVolume * sPlayingMusic->mVolMulti;
     s32 _LenTilEnd = sPlayingMusic->mLength - sPlayingMusic->mCurrent;
     if (_LenTilEnd < aLength) {
         DynOS_Audio_Mix(aStream, sPlayingMusic->mData + sPlayingMusic->mCurrent, _LenTilEnd, _Volume, 0);
@@ -86,6 +93,13 @@ static void DynOS_Music_Callback(UNUSED void *, u8 *aStream, s32 aLength) {
     } else {
         DynOS_Audio_Mix(aStream, sPlayingMusic->mData + sPlayingMusic->mCurrent, aLength, _Volume, 0);
         sPlayingMusic->mCurrent += aLength;
+        mCurrentMultiTrack = sPlayingMusic->mCurrent;
+        if (sPlayingMusic->mFadeIn == 1) {
+            if (sPlayingMusic->mFadeTime != 0) {
+                DynOS_Music_FadeIn();
+            }
+        }
+        
     }
 }
 
@@ -130,6 +144,9 @@ bool DynOS_Music_LoadRaw(const String &aName, const u8 *aData, s32 aLength, s32 
     _MusicData->mLoop     = aLoop * sizeof(s16) * MUSIC_CHANNELS;
     _MusicData->mCurrent  = 0;
     _MusicData->mVolume   = aVolume;
+    _MusicData->mVolMulti = 0.0f;
+    _MusicData->mFadeTime = 1000;
+    _MusicData->mFadeIn   = 0;
     sLoadedMusics.Add(_MusicData);
     return true;
 }
@@ -166,6 +183,9 @@ bool DynOS_Music_LoadWav(const String &aName, const SysPath &aFilename, s32 aLoo
     _MusicData->mLoop     = aLoop * sizeof(s16) * MUSIC_CHANNELS;
     _MusicData->mCurrent  = 0;
     _MusicData->mVolume   = aVolume;
+    _MusicData->mVolMulti = 0.0f;
+    _MusicData->mFadeTime = 1000;
+    _MusicData->mFadeIn   = 0;
     sLoadedMusics.Add(_MusicData);
     return true;
 }
@@ -203,16 +223,35 @@ void DynOS_Music_Play(const String& aName) {
     if (_MusicDataIndex == -1) {
         return;
     }
-
     SDL_LockAudioDevice(DynOS_Music_GetDevice());
     sPlayingMusic = sLoadedMusics[_MusicDataIndex];
     sPlayingMusic->mCurrent = 0;
     SDL_UnlockAudioDevice(DynOS_Music_GetDevice());
     SDL_PauseAudioDevice(DynOS_Music_GetDevice(), false);
+    sPlayingMusic->mFadeIn = 1;
+    sPlayingMusic->mVolMulti = 0.0f;
+    DynOS_Music_FadeIn();
+}
+
+void DynOS_Music_Multi_Play(const String& aName) {
+    s32 _MusicDataIndex = sLoadedMusics.FindIf([&aName](const MusicData *aMusicData) { return aMusicData->mName == aName; });
+    if (_MusicDataIndex == -1) {
+        return;
+    }
+
+    SDL_LockAudioDevice(DynOS_Music_GetDevice());
+    sPlayingMusic = sLoadedMusics[_MusicDataIndex];
+    sPlayingMusic->mCurrent = mCurrentMultiTrack;
+    SDL_UnlockAudioDevice(DynOS_Music_GetDevice());
+    SDL_PauseAudioDevice(DynOS_Music_GetDevice(), false);
+    sPlayingMusic->mFadeIn = 1;
+    sPlayingMusic->mVolMulti = 0.0f;
+    DynOS_Music_FadeIn();
 }
 
 void DynOS_Music_Stop() {
     SDL_LockAudioDevice(DynOS_Music_GetDevice());
+    mCurrentMultiTrack = 0;
     sPlayingMusic = NULL;
     SDL_UnlockAudioDevice(DynOS_Music_GetDevice());
     SDL_PauseAudioDevice(DynOS_Music_GetDevice(), true);
@@ -228,6 +267,18 @@ void DynOS_Music_Resume() {
 
 bool DynOS_Music_IsPlaying(const String& aName) {
     return (sPlayingMusic != NULL) && (aName.Empty() || sPlayingMusic->mName == aName);
+}
+
+void DynOS_Music_FadeIn() {
+    if (sPlayingMusic->mFadeTime > 0) {
+        sPlayingMusic->mVolMulti += 0.01f;
+        sPlayingMusic->mFadeTime -= 10;
+    }
+    if (sPlayingMusic->mFadeTime == 0) {
+        sPlayingMusic->mFadeIn = 0;
+        sPlayingMusic->mVolMulti = 1.0f;
+        sPlayingMusic->mFadeTime = 1000;
+    }
 }
 
 //
@@ -434,6 +485,9 @@ struct JingleData {
     s32 mLoop;
     s32 mCurrent;
     f32 mVolume;
+    f32 mVolMulti;
+    s32 mFadeTime;
+    s32 mFadeIn;
 };
 
 STATIC_STORAGE(Array<JingleData *>, LoadedJingles);
@@ -442,13 +496,15 @@ STATIC_STORAGE(Array<JingleData *>, LoadedJingles);
 STATIC_STORAGE(JingleData *, PlayingJingle);
 #define sPlayingJingle __PlayingJingle()
 
+void DynOS_Jingle_FadeIn();
+
 static void DynOS_Jingle_Callback(UNUSED void *, u8 *aStream, s32 aLength) {
     bzero(aStream, aLength);
     if (sPlayingJingle == NULL) {
         return;
     }
 
-    f32 _Volume = sPlayingJingle->mVolume * (configMasterVolume / 127.f) * (configMusicVolume / 127.f) * softenJingleVolume;
+    f32 _Volume = sPlayingJingle->mVolume * (configMasterVolume / 127.f) * (configMusicVolume / 127.f) * softenJingleVolume * sPlayingJingle->mVolMulti;
     s32 _LenTilEnd = sPlayingJingle->mLength - sPlayingJingle->mCurrent;
     if (_LenTilEnd < aLength) {
         DynOS_Audio_Mix(aStream, sPlayingJingle->mData + sPlayingJingle->mCurrent, _LenTilEnd, _Volume, 0);
@@ -461,6 +517,11 @@ static void DynOS_Jingle_Callback(UNUSED void *, u8 *aStream, s32 aLength) {
     } else {
         DynOS_Audio_Mix(aStream, sPlayingJingle->mData + sPlayingJingle->mCurrent, aLength, _Volume, 0);
         sPlayingJingle->mCurrent += aLength;
+        if (sPlayingJingle->mFadeIn == 1) {
+            if (sPlayingJingle->mFadeTime != 0) {
+                DynOS_Jingle_FadeIn();
+            }
+        }
     }
 }
 
@@ -505,6 +566,9 @@ bool DynOS_Jingle_LoadRaw(const String &aName, const u8 *aData, s32 aLength, s32
     _JingleData->mLoop     = aLoop * sizeof(s16) * MUSIC_CHANNELS;
     _JingleData->mCurrent  = 0;
     _JingleData->mVolume   = aVolume;
+    _JingleData->mVolMulti = 0.0f;
+    _JingleData->mFadeTime = 1000;
+    _JingleData->mFadeIn   = 0;
     sLoadedJingles.Add(_JingleData);
     return true;
 }
@@ -541,6 +605,9 @@ bool DynOS_Jingle_LoadWav(const String &aName, const SysPath &aFilename, s32 aLo
     _JingleData->mLoop     = aLoop * sizeof(s16) * MUSIC_CHANNELS;
     _JingleData->mCurrent  = 0;
     _JingleData->mVolume   = aVolume;
+    _JingleData->mVolMulti = 0.0f;
+    _JingleData->mFadeTime = 1000;
+    _JingleData->mFadeIn   = 0;
     sLoadedJingles.Add(_JingleData);
     return true;
 }
@@ -584,6 +651,9 @@ void DynOS_Jingle_Play(const String& aName) {
     sPlayingJingle->mCurrent = 0;
     SDL_UnlockAudioDevice(DynOS_Jingle_GetDevice());
     SDL_PauseAudioDevice(DynOS_Jingle_GetDevice(), false);
+    sPlayingJingle->mFadeIn = 1;
+    sPlayingJingle->mVolMulti = 0.0f;
+    DynOS_Jingle_FadeIn();
 }
 
 void DynOS_Jingle_Stop() {
@@ -603,4 +673,16 @@ void DynOS_Jingle_Resume() {
 
 bool DynOS_Jingle_IsPlaying(const String& aName) {
     return (sPlayingJingle != NULL) && (aName.Empty() || sPlayingJingle->mName == aName);
+}
+
+void DynOS_Jingle_FadeIn() {
+    if (sPlayingJingle->mFadeTime > 0) {
+        sPlayingJingle->mVolMulti += 0.01f;
+        sPlayingJingle->mFadeTime -= 10;
+    }
+    if (sPlayingJingle->mFadeTime == 0) {
+        sPlayingJingle->mFadeIn = 0;
+        sPlayingJingle->mVolMulti = 1.0f;
+        sPlayingJingle->mFadeTime = 1000;
+    }
 }

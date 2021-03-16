@@ -443,8 +443,16 @@ void init_mario_after_warp(void) {
             r96_play_cap_music(R96_EVENT_CAP_METAL);
         }
 
-        if (gMarioState->flags & (MARIO_VANISH_CAP | MARIO_WING_CAP)) {
-            r96_play_cap_music(R96_EVENT_POWERUP);
+        if (gMarioState->flags & (MARIO_VANISH_CAP)) {
+            r96_play_cap_music(R96_EVENT_CAP_VANISH);
+        }
+
+        if (gMarioState->flags & MARIO_WING_CAP) {
+            r96_play_cap_music(R96_EVENT_CAP_WING);
+        }
+
+        if (gMarioState->flags & MARIO_NORMAL_CAP) {
+            r96_stop_cap_music();
         }
 
         if (sWarpDest.levelNum == LEVEL_CASTLE && sWarpDest.areaIdx == 1
@@ -473,7 +481,6 @@ void warp_area(void) {
             unload_mario_area();
             load_area(sWarpDest.areaIdx);
         }
-
         init_mario_after_warp();
     }
 }

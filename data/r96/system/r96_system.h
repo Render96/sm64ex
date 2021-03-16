@@ -60,18 +60,15 @@ void r96_play_menu_jingle(const char* R96_JINGLE);
 void r96_play_jingle(const char* R96_JINGLE);
 void r96_play_collect_jingle(const char* R96_JINGLE);
 void r96_stop_jingle();
-void r96_jingle_fade_in();
 void r96_jingle_fade_out();
 
 // Music Functions
 
 void r96_play_music(const char* R96_MUSIC);
 void r96_stop_music();
-void r96_music_fade_in();
-void r96_music_fade_out();
 
 // When the fanfare is playing and the pause window opens
-void r96_music_jingle_pause();
+void r96_lower_music();
 
 const char *r96_get_intended_level_music();
 void r96_level_music_update();

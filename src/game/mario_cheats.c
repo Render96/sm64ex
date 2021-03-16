@@ -1521,7 +1521,7 @@ void cheats_mario_inputs(struct MarioState *m) {
                 if ((m->action & ACT_GROUP_MASK) == (!(ACT_GROUP_AIRBORNE) && !(ACT_GROUP_SUBMERGED))) {
                     set_mario_action(m, ACT_PUTTING_ON_CAP, 0);
                 }
-                r96_play_cap_music(R96_EVENT_POWERUP);
+                r96_play_cap_music(R96_EVENT_CAP_WING);
                 Cheats.WingCap = false;
             }
 
@@ -1539,7 +1539,7 @@ void cheats_mario_inputs(struct MarioState *m) {
                 if ((m->action & ACT_GROUP_MASK) == (!(ACT_GROUP_AIRBORNE) && !(ACT_GROUP_SUBMERGED))) {
                     set_mario_action(m, ACT_PUTTING_ON_CAP, 0);
                 }
-                r96_play_music(R96_EVENT_POWERUP);
+                r96_play_music(R96_EVENT_CAP_VANISH);
                 Cheats.VanishCap = false;
             }
 

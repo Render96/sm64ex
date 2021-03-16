@@ -1611,7 +1611,7 @@ u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o
         switch (capFlag) {
             case MARIO_VANISH_CAP:
                 capTime = 600;
-                capMusic = R96_EVENT_POWERUP;
+                capMusic = R96_EVENT_CAP_VANISH;
                 break;
 
             case MARIO_METAL_CAP:
@@ -1621,7 +1621,7 @@ u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o
 
             case MARIO_WING_CAP:
                 capTime = 1800;
-                capMusic = R96_EVENT_POWERUP;
+                capMusic = R96_EVENT_CAP_WING;
                 break;
         }
 

@@ -466,7 +466,7 @@ s32 act_reading_automatic_dialog(struct MarioState *m) {
             disable_time_stop();
             if (gShouldNotPlayCastleMusic) {
                 gShouldNotPlayCastleMusic = FALSE;
-                r96_play_music(R96_LEVEL_INSIDE_CASTLE);
+                r96_play_music(R96_LEVEL_INSIDE_CASTLE_LOBBY);
                 //play_cutscene_music(SEQUENCE_ARGS(0, SEQ_LEVEL_INSIDE_CASTLE));
             }
             if (m->prevAction == ACT_STAR_DANCE_WATER) {
@@ -588,7 +588,6 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
                 disable_background_sound();
                 if (m->actionArg & 1) {
                     r96_play_jingle(R96_EVENT_STAR_FANFARE);
-                    softenJingleVolume = 1.0f;
                 } else {
                     if (gCurrLevelNum == LEVEL_BOWSER_1 || gCurrLevelNum == LEVEL_BOWSER_2) {
                         r96_play_jingle(R96_EVENT_KEY_COLLECT);
@@ -1839,7 +1838,6 @@ static void jumbo_star_cutscene_falling(struct MarioState *m) {
 
         if (perform_air_step(m, 1) == AIR_STEP_LANDED) {
             r96_stop_music();
-            softenJingleVolume = 1.0f;
             r96_play_jingle(R96_EVENT_VICTORY);
             play_mario_landing_sound(m, SOUND_ACTION_TERRAIN_LANDING);
             m->actionState++;
@@ -2058,7 +2056,6 @@ static void end_peach_cutscene_summon_jumbo_star(struct MarioState *m) {
     }
     if (m->actionTimer == 90) {
         r96_play_jingle(R96_EVENT_PEACH_ENDING);
-        softenJingleVolume = 1.0f;
     }
     if (m->actionTimer == 255) {
         advance_cutscene_step(m);
@@ -2360,7 +2357,6 @@ static void end_peach_cutscene_star_dance(struct MarioState *m) {
         case 140:
             sequence_player_unlower(SEQ_PLAYER_LEVEL, 60);
             r96_play_jingle(R96_EVENT_CREDITS);
-            softenJingleVolume = 1.0f;
             break;
 
         case 142:
