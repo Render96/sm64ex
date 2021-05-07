@@ -5,6 +5,7 @@
 
 // capswitch
 extern const GeoLayout cap_switch_geo[];
+extern const GeoLayout cap_switch_base_geo[];
 extern const Gfx capswitch_seg5_dl_05002D88[];
 extern const Gfx cap_switch_exclamation_seg5_dl_05002E00[];
 extern const Gfx capswitch_seg5_dl_05003020[];

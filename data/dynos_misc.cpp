@@ -130,6 +130,7 @@ static const Array<Pair<const char *, void *>> sActors = {
     define_actor(cannon_barrel_geo),
     define_actor(cannon_base_geo),
     define_actor(cap_switch_geo),
+    define_actor(cap_switch_base_geo),
     define_actor(cartoon_star_geo),
     define_actor(chain_chomp_geo),
     define_actor(checkerboard_platform_geo),

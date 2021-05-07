@@ -476,6 +476,7 @@ s32 mario_execute_object_action(struct MarioState *m) {
         case ACT_RELEASING_ENEMIES:  cancel = act_releasing_enemies(m);  break;
         case ACT_WARIO_PILE_DRIVER:  cancel = act_wario_pile_driver(m);  break;
         case ACT_WARIO_PILE_DRIVER_LAND:  cancel = act_wario_pile_driver_land(m);  break;
+        case ACT_WARIO_CHARGE_PUNCH:       cancel = act_wario_charge_punch(m);       break;
     }
     /* clang-format on */
 

@@ -13,3 +13,12 @@ const GeoLayout cap_switch_geo[] = {
    GEO_CLOSE_NODE(),
    GEO_END(),
 };
+
+// 0x0C000048
+const GeoLayout cap_switch_base_geo[] = {
+   GEO_CULLING_RADIUS(600),
+   GEO_OPEN_NODE(),
+      GEO_DISPLAY_LIST(LAYER_OPAQUE, cap_switch_base_seg5_dl_05003120),
+   GEO_CLOSE_NODE(),
+   GEO_END(),
+};
