@@ -9,7 +9,7 @@ static Movtex ssl_movtex_puddle_water_data[] = {
     MOV_TEX_4_BOX_TRIS(-4223, -7167),
     MOV_TEX_ROT(     ROTATE_COUNTER_CLOCKWISE),
     MOV_TEX_ALPHA(    0x96),
-    MOV_TEX_DEFINE(  TEXTURE_WATER),
+    MOV_TEX_DEFINE(  TEXTURE_SSL_FOG),
     MOV_TEX_END(),
 };
 
@@ -30,7 +30,7 @@ static Movtex ssl_movtex_toxbox_quicksand_large_mist[] = {
     MOV_TEX_4_BOX_TRIS( 7578, -7065),
     MOV_TEX_ROT(     ROTATE_COUNTER_CLOCKWISE),
     MOV_TEX_ALPHA(    0x96),
-    MOV_TEX_DEFINE(  TEXTURE_WATER), // vertex shaded to another color
+    MOV_TEX_DEFINE(  TEXTURE_SSL_FOG), // vertex shaded to another color
     MOV_TEX_END(),
 };
 
@@ -45,7 +45,7 @@ static Movtex ssl_movtex_toxbox_quicksand_short_mist[] = {
     MOV_TEX_4_BOX_TRIS( 1024, -7065),
     MOV_TEX_ROT(     ROTATE_COUNTER_CLOCKWISE),
     MOV_TEX_ALPHA(    0x96),
-    MOV_TEX_DEFINE(  TEXTURE_WATER), // vertex shaded to another color
+    MOV_TEX_DEFINE(  TEXTURE_SSL_FOG), // vertex shaded to another color
     MOV_TEX_END(),
 };
 

@@ -131,7 +131,8 @@ extern u8 ttc_yellow_triangle[];
 u8 *gMovtexIdToTexture[] = { texture_waterbox_water,     texture_waterbox_mist,
                              texture_waterbox_jrb_water, texture_waterbox_unknown_water,
                              texture_waterbox_lava,      ssl_quicksand,
-                             ssl_pyramid_sand,           ttc_yellow_triangle };
+                             ssl_pyramid_sand,           ttc_yellow_triangle,
+                             texture_ssl_fog };
 
 extern Gfx castle_grounds_dl_waterfall[];
 extern s16 castle_grounds_movtex_tris_waterfall[];

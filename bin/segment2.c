@@ -895,6 +895,8 @@ ALIGNED8 const u8 texture_transition_bowser_half[] = "textures/segment2/segment2
 
 ALIGNED8 const u8 texture_waterbox_water[] = "textures/segment2/segment2.11C58.rgba16";
 
+ALIGNED8 const u8 texture_ssl_fog[] = "textures/segment2/segment2.11C59.rgba16";
+
 ALIGNED8 const u8 texture_waterbox_jrb_water[] = "textures/segment2/segment2.12458.rgba16";
 
 ALIGNED8 const u8 texture_waterbox_unknown_water[] = "textures/segment2/segment2.12C58.rgba16";

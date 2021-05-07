@@ -13,6 +13,7 @@ extern u8 texture_transition_circle_half[];
 extern u8 texture_transition_mario[];
 extern u8 texture_transition_bowser_half[];
 extern u8 texture_waterbox_water[];
+extern u8 texture_ssl_fog[];
 extern u8 texture_waterbox_mist[];
 extern u8 texture_waterbox_jrb_water[];
 extern u8 texture_waterbox_unknown_water[];
