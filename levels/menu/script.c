@@ -25,11 +25,19 @@ const LevelScript level_main_menu_entry_1[] = {
     LOAD_RAW(/*seg*/ 0x13, _behaviorSegmentRomStart, _behaviorSegmentRomEnd),
     ALLOC_LEVEL_POOL(),
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_MARIO_SAVE_BUTTON,      geo_menu_mario_save_button),
+
+    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_LUIGI_SAVE_BUTTON,      geo_menu_luigi_save_button),
+    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_WARIO_SAVE_BUTTON,      geo_menu_wario_save_button),
+
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_RED_ERASE_BUTTON,       geo_menu_erase_button),
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_BLUE_COPY_BUTTON,       geo_menu_copy_button),
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_YELLOW_FILE_BUTTON,     geo_menu_file_button),
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_GREEN_SCORE_BUTTON,     geo_menu_score_button),
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_MARIO_SAVE_BUTTON_FADE, geo_menu_mario_save_button_fade),
+
+    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_LUIGI_SAVE_BUTTON_FADE, geo_menu_luigi_save_button_fade),
+    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_WARIO_SAVE_BUTTON_FADE, geo_menu_wario_save_button_fade),
+
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_MARIO_NEW_BUTTON,       geo_menu_mario_new_button),
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_MARIO_NEW_BUTTON_FADE,  geo_menu_mario_new_button_fade),
     LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_PURPLE_SOUND_BUTTON,    geo_menu_sound_button),

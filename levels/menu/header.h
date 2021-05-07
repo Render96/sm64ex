@@ -6,6 +6,14 @@
 // geo
 extern const GeoLayout geo_menu_mario_save_button[];
 extern const GeoLayout geo_menu_mario_save_button_fade[];
+
+extern const GeoLayout geo_menu_luigi_save_button[];
+extern const GeoLayout geo_menu_luigi_save_button_fade[];
+
+extern const GeoLayout geo_menu_wario_save_button[];
+extern const GeoLayout geo_menu_wario_save_button_fade[];
+
+
 extern const GeoLayout geo_menu_mario_new_button[];
 extern const GeoLayout geo_menu_mario_new_button_fade[];
 extern const GeoLayout geo_menu_erase_button[];
@@ -19,6 +27,10 @@ extern const GeoLayout geo_menu_act_selector_strings[];
 
 // leveldata
 extern const Gfx dl_menu_mario_save_button_base[];
+
+extern const Gfx dl_menu_luigi_save_button_base[];
+extern const Gfx dl_menu_wario_save_button_base[];
+
 extern const Gfx dl_menu_mario_new_button_base[];
 extern const Gfx dl_menu_save_button_back[];
 extern const Gfx dl_menu_save_button_fade_back[];

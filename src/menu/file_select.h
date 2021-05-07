@@ -126,6 +126,9 @@ enum EraseMenuActionPhase {
 enum SoundModeMenuActionPhase {
     SOUND_MODE_PHASE_MAIN
 };
+u32 menu_model(s8 currentSave);
+u32 menu_model_fade(s8 currentSave);
+char *menu_sound(s8 currentSave);
 
 void beh_yellow_background_menu_init(void);
 void beh_yellow_background_menu_loop(void);
