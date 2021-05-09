@@ -454,13 +454,13 @@ static void gfx_d3d11_upload_texture(const uint8_t *rgba32_buf, int width, int h
 
     texture_desc.Width = width;
     texture_desc.Height = height;
-    texture_desc.Usage = D3D11_USAGE_IMMUTABLE;
-    texture_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    texture_desc.Usage = D3D11_USAGE_DEFAULT;
+    texture_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
     texture_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     texture_desc.CPUAccessFlags = 0;
-    texture_desc.MiscFlags = 0; // D3D11_RESOURCE_MISC_GENERATE_MIPS ?
+    texture_desc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
     texture_desc.ArraySize = 1;
-    texture_desc.MipLevels = 1;
+    texture_desc.MipLevels = 0;
     texture_desc.SampleDesc.Count = 1;
     texture_desc.SampleDesc.Quality = 0;
 
@@ -470,7 +470,8 @@ static void gfx_d3d11_upload_texture(const uint8_t *rgba32_buf, int width, int h
     resource_data.SysMemSlicePitch = resource_data.SysMemPitch * height;
 
     ComPtr<ID3D11Texture2D> texture;
-    ThrowIfFailed(d3d.device->CreateTexture2D(&texture_desc, &resource_data, texture.GetAddressOf()));
+    ThrowIfFailed(d3d.device->CreateTexture2D(&texture_desc, nullptr, texture.GetAddressOf()));
+    d3d.context->UpdateSubresource(texture.Get(), 0, 0, rgba32_buf, resource_data.SysMemPitch, 0);
 
     // Create shader resource view from texture
 
@@ -492,6 +493,7 @@ static void gfx_d3d11_upload_texture(const uint8_t *rgba32_buf, int width, int h
     }
 
     ThrowIfFailed(d3d.device->CreateShaderResourceView(texture.Get(), &resource_view_desc, texture_data->resource_view.GetAddressOf()));
+    d3d.context->GenerateMips(texture_data->resource_view.Get());
 }
 
 static void gfx_d3d11_set_sampler_parameters(int tile, bool linear_filter, uint32_t cms, uint32_t cmt) {
